@@ -11,6 +11,9 @@ use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 
 AppAsset::register($this);
+
+$this->title = 'Новости';
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -37,16 +40,14 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'Домашняя страница', 'url' => ['/']],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
+                ['label' => 'Войти', 'url' => ['/admin/login']]
             ) : (
                 '<li>'
-                . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
+                . Html::beginForm(['/admin/logout'], 'post', ['class' => 'form-inline'])
                 . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    'Выйти',
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()
@@ -61,6 +62,10 @@ AppAsset::register($this);
 <main role="main" class="flex-shrink-0">
     <div class="container">
         <?= Breadcrumbs::widget([
+            'homeLink' => [
+                'label' => 'Домашняя страница',
+                'url' => '/',
+            ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
@@ -70,7 +75,7 @@ AppAsset::register($this);
 
 <footer class="footer mt-auto py-3 text-muted">
     <div class="container">
-        <p class="float-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="float-left">&copy; Ivan Shatalov <?= date('Y') ?></p>
         <p class="float-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
