@@ -2,20 +2,20 @@
 
 namespace app\models\query;
 
-use app\models\User;
+use app\models\NewsComment;
 use yii\db\ActiveQuery;
 use yii\db\Connection;
 
 /**
- * This is the ActiveQuery class for [[\app\models\User]].
+ * This is the ActiveQuery class for [[\app\models\NewsComment]].
  *
- * @see \app\models\User
+ * @see \app\models\NewsComment
  */
-class UserQuery extends ActiveQuery
+class NewsCommentQuery extends ActiveQuery
 {
     /**
      * @param Connection|null $db
-     * @return User[]|array
+     * @return NewsComment[]|array
      */
     public function all($db = null): array
     {
@@ -24,7 +24,7 @@ class UserQuery extends ActiveQuery
 
     /**
      * @param Connection|null $db
-     * @return User|array|null
+     * @return NewsComment|array|null
      */
     public function one($db = null)
     {
