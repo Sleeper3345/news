@@ -4,15 +4,17 @@
 /** @var string $content */
 
 use app\assets\AppAsset;
+use app\models\Category;
 use app\widgets\Alert;
+use kartik\sidenav\SideNav;
 use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
+use yii\helpers\Url;
+use yii\widgets\Menu;
 
 AppAsset::register($this);
-
-$this->title = 'Новости';
 
 ?>
 <?php $this->beginPage() ?>
@@ -42,7 +44,7 @@ $this->title = 'Новости';
         'items' => [
             ['label' => 'Домашняя страница', 'url' => ['/']],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Войти', 'url' => ['/admin/login']]
+                ['label' => 'Войти', 'url' => ['/admin']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/admin/logout'], 'post', ['class' => 'form-inline'])
@@ -72,6 +74,21 @@ $this->title = 'Новости';
         <?= $content ?>
     </div>
 </main>
+
+<div>
+    <nav class="menu">
+        <h3 class="menu-heading">Категории</h3>
+        <?php
+
+        echo Menu::widget([
+            'items' => Category::getCategoriesForMenu(),
+            'itemOptions' => ['class' => 'menu-item'],
+            'activeCssClass' => 'selected',
+        ]);
+
+        ?>
+    </nav>
+</div>
 
 <footer class="footer mt-auto py-3 text-muted">
     <div class="container">

@@ -1,9 +1,8 @@
 <?php
 
-use yii\web\Request;
-
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$redis = require __DIR__ . '/redis.php';
 
 $config = [
     'id' => 'basic',
@@ -43,12 +42,14 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => true,
             'rules' => [
-                '<controller:\w+>/<id:\d+>' => '<controller>/view',
-                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
-                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+                '<controller:[\w-]+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:[\w-]+>/<action:\w+>' => '<controller>/<action>',
                 '/' => '/site/index',
+                'admin' => '/admin/login',
+                '/news/<slug:\S+>' => '/news/view',
             ],
         ],
+        'redis' => $redis,
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],

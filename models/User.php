@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\helpers\UserRoleHelper;
 use app\models\query\UserQuery;
 use Yii;
 use yii\web\IdentityInterface;
@@ -52,6 +53,14 @@ class User extends ActiveRecord implements IdentityInterface
             'created_at' => 'Дата создания',
             'updated_at' => 'Дата обновления',
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSuperadmin(): bool
+    {
+        return Yii::$app->authManager->getAssignment(UserRoleHelper::ROLE_SUPERADMIN, $this->id) !== null;
     }
 
     /**

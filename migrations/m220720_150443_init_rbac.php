@@ -17,7 +17,7 @@ class m220720_150443_init_rbac extends Migration
         $auth = Yii::$app->authManager;
 
         // Добавляем роль superadmin, которая будет иметь доступ ко всем разделам
-        $admin = $auth->createRole('admin');
+        $admin = $auth->createRole('superadmin');
         $auth->add($admin);
 
         // Задаем пользователю с id = 1 роль суперадмина
