@@ -2,10 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\Category;
 use app\models\search\CategorySearch;
 use Yii;
 use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
+use yii\web\Response;
 
 /**
  * Class CategoryController
@@ -39,5 +41,64 @@ class CategoryController extends Controller
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    /**
+     * @param int|null $id
+     * @return string|Response
+     * @throws HttpException
+     */
+    public function actionEdit(int $id = null)
+    {
+        if ($id === null) {
+            $model = new Category();
+        } else {
+            $model = Category::findById($id);
+
+            if (!$model) {
+                throw new HttpException(404, 'Категория не найдена');
+            }
+        }
+
+        if (Yii::$app->request->isPost) {
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', 'Категория сохранена');
+                return $this->redirect('/category/index');
+            }
+
+            Yii::$app->session->setFlash('error', current($model->getFirstErrors()));
+        }
+
+        $categories = Category::find()
+            ->collection();
+
+        return $this->render('edit', [
+            'model' => $model,
+            'categories' => $categories,
+        ]);
+    }
+
+    /**
+     * @param int $id
+     * @return Response
+     * @throws HttpException
+     */
+    public function actionDelete(int $id): Response
+    {
+        $model = Category::findById($id);
+
+        if (!$model) {
+            throw new HttpException(404, 'Категория не найдена');
+        }
+
+        try {
+            $model->delete();
+        } catch (\Exception $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+
+        Yii::$app->session->setFlash('success', 'Категория удалена');
+
+        return $this->redirect('/category/index');
     }
 }

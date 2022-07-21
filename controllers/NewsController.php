@@ -62,10 +62,10 @@ class NewsController extends Controller
     }
 
     /**
- * @param int|null $id
- * @return string|Response
- * @throws HttpException
- */
+     * @param int|null $id
+     * @return string|Response
+     * @throws HttpException
+     */
     public function actionEdit(int $id = null)
     {
         if ($id === null) {

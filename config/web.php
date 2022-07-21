@@ -2,6 +2,7 @@
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$redis = require __DIR__ . '/redis.php';
 
 $config = [
     'id' => 'basic',
@@ -48,12 +49,7 @@ $config = [
                 '/news/<slug:\S+>' => '/news/view',
             ],
         ],
-        'redis' => [
-            'class' => 'yii\redis\Connection',
-            'hostname' => 'localhost',
-            'port' => 6379,
-            'database' => 0,
-        ],
+        'redis' => $redis,
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],

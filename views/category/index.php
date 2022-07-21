@@ -56,3 +56,5 @@ $this->title = 'Категории';
         ]
     ],
 ]) ?>
+
+<?= Html::a('Добавить категорию', ['edit'], ['class' => 'btn btn-primary']) ?>

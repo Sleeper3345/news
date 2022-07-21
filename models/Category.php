@@ -156,6 +156,17 @@ class Category extends ActiveRecord
     }
 
     /**
+     * @param int $id
+     * @return self|null
+     */
+    public static function findById(int $id): ?self
+    {
+        return self::find()
+            ->where(['id' => $id])
+            ->one();
+    }
+
+    /**
      * @throws InvalidConfigException
      */
     private static function clearCache(): void
